@@ -8,14 +8,16 @@
 </head>
 
 <body>
-    <h1 id="myHeading">我的第一个标题4</h1>
+    <h1 id="myHeading">我的第一个标题5</h1>
     <script>
         var h1Element = document.getElementById('myHeading');
 
         function strToFun(data) {
+            h1Element.textContent += '\n' + 'strToFun---->';
             data = data && JSON.parse(data); //参数
             if (!data) return;
             console.log("web接收:", data);
+            h1Element.textContent += '\n' + 'strToFun---->' + data.fun;
             window[data.fun] && window[data.fun](data.parm);
         }
         //web接收来自cocos的消息
@@ -28,7 +30,7 @@
         });
         // 安卓时接受cocos数据
         function cocosToWeb(params) {
-            h1Element.textContent += '\n' + 'Ntv---->' + JSON.stringify(params);
+            h1Element.textContent += '\n' + 'Ntv---->';
             strToFun(params);
         }
 

@@ -8,9 +8,14 @@
 </head>
 
 <body>
-    <h1 id="myHeading">我的第一个标题4</h1>
+    <h1 id="myHeading">我的第一个标题3</h1>
     <script>
         var h1Element = document.getElementById('myHeading');
+        let isNative = false;
+
+        function setIsNative() {
+            isNative = true;
+        }
 
         function strToFun(data) {
             h1Element.textContent += '\n' + 'strToFun---->';
@@ -35,13 +40,12 @@
         // 安卓时接受cocos数据
         function cocosToWeb(params) {
             h1Element.textContent += '\n' + 'Ntv---->';
-            // strToFun(params);
-            getBalance();
+            strToFun(atob(params));
         }
 
         function sendToCocos(data) {
             h1Element.textContent += '\n' + 'sendToCocos---->' + JSON.stringify(data);
-            if (window.isNative) {
+            if (isNative) {
                 h1Element.textContent += '\n' + 'isNative---->';
                 //android or ios
                 document.location = 'testkey://' + btoa(JSON.stringify(data));

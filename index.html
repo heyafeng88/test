@@ -9,20 +9,34 @@
 
 <body>
     <script>
-        //接收来自cocos的消息
-        window.addEventListener('message', function (e) {
-            let data = e.data;
-            if (!data.startsWith("_ToWeb")) return;
-            data = data.replace("_ToWeb", "");
+        function strToFun(data) {
             data = data && JSON.parse(data); //参数
             if (!data) return;
             console.log("web接收:", data);
             window[data.fun] && window[data.fun](data.parm);
+        }
+        //web接收来自cocos的消息
+        window.addEventListener('message', function (e) {
+            let data = e.data;
+            if (!data.startsWith("_ToWeb")) return;
+            data = data.replace("_ToWeb", "");
+            strToFun(data);
         });
 
         function sendToCocos(data) {
-            //browser 浏览器下，向cocos发送消息
-            parent.postMessage("_ToCocos" + JSON.stringify(data), "*")
+            if (window.isNative) {
+                //android or ios
+                // document.location = 'testkey://a=1&b=2'
+                parent.onWebToCocos && parent.onWebToCocos(data);
+            } else {
+                //browser 浏览器下，向cocos发送消息
+                parent.postMessage("_ToCocos" + JSON.stringify(data), "*");
+            }
+        }
+
+        // 安卓时接受cocos数据
+        function cocosToWeb(params) {
+            strToFun(params);
         }
 
         function getBalance(param) {
@@ -35,7 +49,7 @@
             });
         }
     </script>
-    <h1>我的第一个标题</h1>
+    <h1>我的第一个标题2</h1>
 </body>
 
 </html>

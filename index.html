@@ -8,13 +8,17 @@
 </head>
 
 <body>
-    <h1 id="myHeading">我的第一个标题5</h1>
+    <h1 id="myHeading">我的第一个标题3</h1>
     <script>
         var h1Element = document.getElementById('myHeading');
 
         function strToFun(data) {
             h1Element.textContent += '\n' + 'strToFun---->';
-            data = data && JSON.parse(data); //参数
+            try {
+                data = data && JSON.parse(data); //参数
+            } catch (error) {
+                h1Element.textContent += '\n' + 'error---->' + error.toString();
+            }
             if (!data) return;
             console.log("web接收:", data);
             h1Element.textContent += '\n' + 'strToFun---->' + data.fun;

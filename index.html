@@ -8,7 +8,10 @@
 </head>
 
 <body>
+    <h1 id="myHeading">我的第一个标题4</h1>
     <script>
+        var h1Element = document.getElementById('myHeading');
+
         function strToFun(data) {
             data = data && JSON.parse(data); //参数
             if (!data) return;
@@ -17,13 +20,20 @@
         }
         //web接收来自cocos的消息
         window.addEventListener('message', function (e) {
+            h1Element.textContent += '\n' + 'Web---->';
             let data = e.data;
             if (!data.startsWith("_ToWeb")) return;
             data = data.replace("_ToWeb", "");
             strToFun(data);
         });
+        // 安卓时接受cocos数据
+        function cocosToWeb(params) {
+            h1Element.textContent += '\n' + 'Ntv---->' + JSON.stringify(params);
+            strToFun(params);
+        }
 
         function sendToCocos(data) {
+            h1Element.textContent += '\n' + 'sendToCocos---->';
             if (window.isNative) {
                 //android or ios
                 document.location = 'testkey://' + btoa(JSON.stringify(data));
@@ -34,22 +44,22 @@
             }
         }
 
-        // 安卓时接受cocos数据
-        function cocosToWeb(params) {
-            strToFun(params);
-        }
 
         function getBalance(param) {
-            const provider = new ethers.providers.JsonRpcProvider("https://rpc-amoy.polygon.technology");
-            provider.getBalance("0x715f63fb9ba17d0601cd857be33e901ce817e383", 'latest').then((data) => {
-                sendToCocos({
-                    fun: "getBalance",
-                    data
+            try {
+                h1Element.textContent += '\n' + 'getBalance---->';
+                const provider = new ethers.providers.JsonRpcProvider("https://rpc-amoy.polygon.technology");
+                provider.getBalance("0x715f63fb9ba17d0601cd857be33e901ce817e383", 'latest').then((data) => {
+                    sendToCocos({
+                        fun: "getBalance",
+                        data
+                    });
                 });
-            });
+            } catch (error) {
+                h1Element.textContent += '\n' + 'error---->' + JSON.stringify(error);
+            }
         }
     </script>
-    <h1>我的第一个标题3</h1>
 </body>
 
 </html>

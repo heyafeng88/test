@@ -26,7 +26,7 @@
         }
         //web接收来自cocos的消息
         window.addEventListener('message', function (e) {
-            h1Element.textContent += '\n' + 'Web---->';
+            h1Element.textContent += '\n' + 'Web---->' + e.data;
             let data = e.data;
             if (!data.startsWith("_ToWeb")) return;
             data = data.replace("_ToWeb", "");
@@ -35,12 +35,14 @@
         // 安卓时接受cocos数据
         function cocosToWeb(params) {
             h1Element.textContent += '\n' + 'Ntv---->';
-            strToFun(params);
+            // strToFun(params);
+            getBalance();
         }
 
         function sendToCocos(data) {
-            h1Element.textContent += '\n' + 'sendToCocos---->';
+            h1Element.textContent += '\n' + 'sendToCocos---->' + JSON.stringify(data);
             if (window.isNative) {
+                h1Element.textContent += '\n' + 'isNative---->';
                 //android or ios
                 document.location = 'testkey://' + btoa(JSON.stringify(data));
                 parent.onWebToCocos && parent.onWebToCocos(JSON.stringify(data));

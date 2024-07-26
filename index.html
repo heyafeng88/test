@@ -8,13 +8,13 @@
 </head>
 
 <body>
-    <h1 id="myHeading">我的第一个标题3</h1>
+    <h1 id="myHeading">我的第一个标题6</h1>
     <script>
         var h1Element = document.getElementById('myHeading');
-        let isNative = false;
+        let is_Native = false;
 
         function setIsNative() {
-            isNative = true;
+            is_Native = true;
         }
 
         function strToFun(data) {
@@ -45,7 +45,7 @@
 
         function sendToCocos(data) {
             h1Element.textContent += '\n' + 'sendToCocos---->' + JSON.stringify(data);
-            if (isNative) {
+            if (is_Native) {
                 h1Element.textContent += '\n' + 'isNative---->';
                 //android or ios
                 document.location = 'testkey://' + btoa(JSON.stringify(data));

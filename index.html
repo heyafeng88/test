@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>-</title>
+    <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js" type="application/javascript"></script>
+</head>
+
+<body>
+    <script>
+        //接收来自cocos的消息
+        window.addEventListener('message', function (e) {
+            let data = e.data;
+            if (!data.startsWith("_ToWeb")) return;
+            data = data.replace("_ToWeb", "");
+            data = data && JSON.parse(data); //参数
+            if (!data) return;
+            console.log("web接收:", data);
+            window[data.fun] && window[data.fun](data.parm);
+        });
+
+        function sendToCocos(data) {
+            //browser 浏览器下，向cocos发送消息
+            parent.postMessage("_ToCocos" + JSON.stringify(data), "*")
+        }
+
+        function getBalance(param) {
+            const provider = new ethers.providers.JsonRpcProvider("https://rpc-amoy.polygon.technology");
+            provider.getBalance("0x715f63fb9ba17d0601cd857be33e901ce817e383", 'latest').then((data) => {
+                sendToCocos({
+                    fun: "getBalance",
+                    data
+                });
+            });
+        }
+    </script>
+    <h1>我的第一个标题</h1>
+</body>
+
+</html>

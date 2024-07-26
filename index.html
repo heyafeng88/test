@@ -8,13 +8,15 @@
 </head>
 
 <body>
-    <h1 id="myHeading">我的第一个标题6</h1>
+    <h1 id="myHeading">我的第一个标题3</h1>
     <script>
         var h1Element = document.getElementById('myHeading');
         let is_Native = false;
 
         function setIsNative() {
+            h1Element.textContent += '\n' + 'is_Native---->';
             is_Native = true;
+            h1Element.textContent += '\n' + 'is_Native2---->';
         }
 
         function strToFun(data) {

@@ -8,7 +8,7 @@
 </head>
 
 <body>
-    <h1 id="myHeading">我的第一个标题8</h1>
+    <h1 id="myHeading">我的第一个标题7</h1>
     <script>
         var h1Element = document.getElementById('myHeading');
         let is_Native = false;
@@ -41,7 +41,11 @@
         });
         // 安卓时接受cocos数据
         function cocosToWeb(params) {
-            h1Element.textContent += '\n' + 'Ntv---->';
+            try {
+                h1Element.textContent += '\n' + 'Ntv+++>' + params ? JSON.stringify(params) : '';
+            } catch (error) {
+                h1Element.textContent += '\n' + 'Ntv++error---->' + error.toString();
+            }
             strToFun(decodeURIComponent(params));
         }
 

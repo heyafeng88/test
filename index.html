@@ -8,7 +8,7 @@
 </head>
 
 <body>
-    <h1 id="myHeading">我的第一个标题3</h1>
+    <h1 id="myHeading">我的第一个标题7</h1>
     <script>
         var h1Element = document.getElementById('myHeading');
         let is_Native = false;
@@ -42,7 +42,7 @@
         // 安卓时接受cocos数据
         function cocosToWeb(params) {
             h1Element.textContent += '\n' + 'Ntv---->';
-            strToFun(atob(params));
+            strToFun(decodeURIComponent(params));
         }
 
         function sendToCocos(data) {
@@ -50,7 +50,7 @@
             if (is_Native) {
                 h1Element.textContent += '\n' + 'isNative---->';
                 //android or ios
-                document.location = 'testkey://' + btoa(JSON.stringify(data));
+                document.location = 'testkey://' + encodeURIComponent(JSON.stringify(data));
                 parent.onWebToCocos && parent.onWebToCocos(JSON.stringify(data));
             } else {
                 //browser 浏览器下，向cocos发送消息

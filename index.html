@@ -42,11 +42,11 @@
         // 安卓时接受cocos数据
         function cocosToWeb(params) {
             try {
-                h1Element.textContent += '\n' + 'Ntv+++>' + params ? JSON.stringify(params) : '';
+                h1Element.textContent += '\n' + 'Ntv-=-=--=>' + params ? JSON.stringify(params) : '';
             } catch (error) {
                 h1Element.textContent += '\n' + 'Ntv++error---->' + error.toString();
             }
-            strToFun(decodeURIComponent(params));
+            strToFun(params);
         }
 
         function sendToCocos(data) {

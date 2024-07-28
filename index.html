@@ -12,6 +12,10 @@
     <script>
         var h1Element = document.getElementById('myHeading');
         let is_Native = false;
+        sendToCocos({
+            fun: "webReady",
+            data: null,
+        });
 
         function setIsNative() {
             h1Element.textContent += '\n' + 'is_Native---->';
@@ -51,16 +55,16 @@
 
         function sendToCocos(data) {
             h1Element.textContent += '\n' + 'sendToCocos---->' + JSON.stringify(data);
-            if (is_Native) {
-                h1Element.textContent += '\n' + 'isNative---->';
-                //android or ios
-                // document.location = 'testkey://' + "a=1&b=2";
-                document.location = 'testkey://' + encodeURIComponent(JSON.stringify(data));
-                parent.onWebToCocos && parent.onWebToCocos(JSON.stringify(data));
-            } else {
-                //browser 浏览器下，向cocos发送消息
-                parent.postMessage("_ToCocos" + JSON.stringify(data), "*");
-            }
+            h1Element.textContent += '\n' + 'isNative---->';
+            //android or ios
+            // document.location = 'testkey://' + "a=1&b=2";
+            document.location = 'testkey://' + encodeURIComponent(JSON.stringify(data));
+            // parent.onWebToCocos && parent.onWebToCocos(JSON.stringify(data));
+            // if (is_Native) {
+            // } else {
+            //     //browser 浏览器下，向cocos发送消息
+            //     parent.postMessage("_ToCocos" + JSON.stringify(data), "*");
+            // }
         }
 
 

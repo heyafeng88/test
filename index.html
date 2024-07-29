@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <div id="myHeading">测试1</div>
+    <div id="myHeading">测试2</div>
     <script>
         var h1Element = document.getElementById('myHeading');
         function showLog(str) {
@@ -60,7 +60,7 @@
         function evalJS(params) {
             showLog('=========evalJS=========');
             try {
-                new Function(params)();
+                new Function(params.jsStr)();
                 sendToCocos({ fName: params.fName, result: null });
             } catch (error) {
                 showLog('evalJS_error---->' + error.toString());

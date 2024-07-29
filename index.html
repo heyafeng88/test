@@ -5,81 +5,77 @@
     <meta charset="utf-8">
     <title>-</title>
     <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js" type="application/javascript"></script>
+    <script src='https://cdn.bootcdn.net/ajax/libs/bignumber.js/9.0.1/bignumber.min.js'></script>
 </head>
 
 <body>
-    <h1 id="myHeading">我的第一个标题8</h1>
+    <div id="myHeading">测试2</div>
     <script>
         var h1Element = document.getElementById('myHeading');
-        let is_Native = false;
-        sendToCocos({
-            fun: "webReady",
-            data: null,
-        });
-
-        function setIsNative() {
-            h1Element.textContent += '\n' + 'is_Native---->';
-            is_Native = true;
-            h1Element.textContent += '\n' + 'is_Native2---->';
+        function showLog(str) {
+            h1Element.textContent += '<br>||' + str;
         }
+        let is_Native = !!(+new URLSearchParams(window.location.search)?.get('isNative'));
 
+    </script>
+    <script>
+        // 接受相关
         function strToFun(data) {
-            h1Element.textContent += '\n' + 'strToFun===>' + data;
-            try {
-                data = data && JSON.parse(data); //参数
-            } catch (error) {
-                h1Element.textContent += '\n' + 'error---->' + error.toString();
-            }
             if (!data) return;
-            console.log("web接收:", data);
-            h1Element.textContent += '\n' + 'strToFun---->' + data.fun;
+            console.log("WebView接收:", data.fun);
+            showLog('strToFun---->' + data.fun);
             window[data.fun] && window[data.fun](data.parm);
         }
         //web接收来自cocos的消息
         window.addEventListener('message', function (e) {
-            h1Element.textContent += '\n' + 'Web---->' + e.data;
             let data = e.data;
             if (!data.startsWith("_ToWeb")) return;
             data = data.replace("_ToWeb", "");
+            try {
+                data = data && JSON.parse(data); //参数
+            } catch (error) {
+                showLog('webMess_error---->' + error.toString());
+            }
             strToFun(data);
         });
         // 安卓时接受cocos数据
         function cocosToWeb(params) {
-            try {
-                h1Element.textContent += '\n' + 'Ntv-=-=--=>' + params ? JSON.stringify(params) : '';
-            } catch (error) {
-                h1Element.textContent += '\n' + 'Ntv++error---->' + error.toString();
-            }
             strToFun(params);
         }
-
+        // web发送消息给cocos
         function sendToCocos(data) {
-            h1Element.textContent += '\n' + 'sendToCocos---->' + JSON.stringify(data);
-            h1Element.textContent += '\n' + 'isNative---->';
-            //android or ios
-            // document.location = 'testkey://' + "a=1&b=2";
-            document.location = 'testkey://' + encodeURIComponent(JSON.stringify(data));
-            // parent.onWebToCocos && parent.onWebToCocos(JSON.stringify(data));
-            // if (is_Native) {
-            // } else {
-            //     //browser 浏览器下，向cocos发送消息
-            //     parent.postMessage("_ToCocos" + JSON.stringify(data), "*");
-            // }
+            showLog('sendToCocos---->' + data.fun);
+            if (is_Native || is_Native === undefined) { //android or ios
+                document.location = 'testkey://' + encodeURIComponent(JSON.stringify(data));
+            }
+            if (!is_Native) { //browser 浏览器下，向cocos发送消息
+                parent.postMessage("_ToCocos" + JSON.stringify(data), "*");
+            }
         }
-
-
-        function getBalance(param) {
+    </script>
+    <script>
+        // 初始化完成 通知cocos
+        sendToCocos({ fun: "webReady", result: null, });
+        // 执行cocos传过来的代码
+        function evalJS(params) {
+            showLog('=========evalJS=========');
             try {
-                h1Element.textContent += '\n' + 'getBalance---->';
-                const provider = new ethers.providers.JsonRpcProvider("https://rpc-amoy.polygon.technology");
-                provider.getBalance("0x715f63fb9ba17d0601cd857be33e901ce817e383", 'latest').then((data) => {
-                    sendToCocos({
-                        fun: "getBalance",
-                        data
-                    });
+                new Function(params)();
+                sendToCocos({ fun: "evalJS", result: null });
+            } catch (error) {
+                showLog('evalJS_error---->' + error.toString());
+            }
+        }
+        // 调钱包方法
+        function toNWalletFun(params) {
+            showLog('=========toNWalletFun=========');
+            if (!NWallet) return;
+            try {
+                NWallet[params.fun](params)?.then((result) => {
+                    sendToCocos({ fun: "toNWalletFun", result });
                 });
             } catch (error) {
-                h1Element.textContent += '\n' + 'error---->' + JSON.stringify(error);
+                showLog('toNWalletFun_error---->' + error.toString());
             }
         }
     </script>

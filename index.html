@@ -36,7 +36,10 @@
             } catch (error) {
                 showLog('webMess_error---->' + error.toString());
             }
-            strToFun(data);
+            // setTimeout防止阻塞message;
+            setTimeout(() => {
+                strToFun(data);
+            });
         });
         // 安卓时接受cocos数据
         function cocosToWeb(params) {

@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <div id="myHeading">测试2</div>
+    <div id="myHeading">测试1</div>
     <script>
         var h1Element = document.getElementById('myHeading');
         function showLog(str) {
@@ -44,7 +44,7 @@
         }
         // web发送消息给cocos
         function sendToCocos(data) {
-            showLog('sendToCocos---->' + data.fun);
+            showLog('sendToCocos---->' + data.fName);
             if (is_Native || is_Native === undefined) { //android or ios
                 document.location = 'testkey://' + encodeURIComponent(JSON.stringify(data));
             }
@@ -55,13 +55,13 @@
     </script>
     <script>
         // 初始化完成 通知cocos
-        sendToCocos({ fun: "webReady", result: null, });
+        sendToCocos({ fName: "webReady", result: null, });
         // 执行cocos传过来的代码
         function evalJS(params) {
             showLog('=========evalJS=========');
             try {
                 new Function(params)();
-                sendToCocos({ fun: "evalJS", result: null });
+                sendToCocos({ fName: params.fName, result: null });
             } catch (error) {
                 showLog('evalJS_error---->' + error.toString());
             }
@@ -71,8 +71,8 @@
             showLog('=========toNWalletFun=========');
             if (!NWallet) return;
             try {
-                NWallet[params.fun](params)?.then((result) => {
-                    sendToCocos({ fun: "toNWalletFun", result });
+                NWallet[params.fun1](params)?.then((result) => {
+                    sendToCocos({ fName: params.fName, result });
                 });
             } catch (error) {
                 showLog('toNWalletFun_error---->' + error.toString());

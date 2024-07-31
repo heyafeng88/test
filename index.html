@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <div id="myHeading">测试11</div>
+    <div id="myHeading">测试12</div>
     <script>
         var h1Element = document.getElementById('myHeading');
 
@@ -51,10 +51,11 @@
         globalThis.testEvaluateJS = testEvaluateJS;
         window.testEvaluateJS = testEvaluateJS;
         // 安卓时接受cocos数据
-        function cocosToWeb(params) {
+        function cocosToWeb() {
             setTimeout(() => {
-                showLog('Native接收:' + params);
-                strToFun(params);
+                showLog('Native接收:-');
+                // showLog('Native接收:' + params);
+                // strToFun(params);
             });
         }
         globalThis.cocosToWeb = cocosToWeb;

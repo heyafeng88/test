@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <div id="myHeading">测试10</div>
+    <div id="myHeading">测试11</div>
     <script>
         var h1Element = document.getElementById('myHeading');
 
@@ -21,10 +21,10 @@
     <script>
         // 接受相关
         function strToFun(data) {
-            if (!data) return;
-            console.log("WebView接收:", data.fun);
-            showLog('strToFun---->' + data.fun);
-            window[data.fun] && window[data.fun](data.parm);
+            // if (!data) return;
+            // console.log("WebView接收:", data.fun);
+            // showLog('strToFun---->' + data.fun);
+            // window[data.fun] && window[data.fun](data.parm);
         }
         //web接收来自cocos的消息
         window.addEventListener('message', function (e) {
@@ -77,12 +77,6 @@
             result: null,
         });
 
-        function getIsReday() {
-            sendToCocos({
-                fName: "webReady",
-                result: null,
-            });
-        }
         // 执行cocos传过来的代码
         function evalJS(params) {
             showLog('=========evalJS=========');
@@ -115,6 +109,18 @@
         }
         globalThis.toNWalletFun = toNWalletFun;
         window.toNWalletFun = toNWalletFun;
+
+        function getIsReday() {
+            setTimeout(() => {
+                showLog('getIsReday---->');
+                sendToCocos({
+                    fName: "webReady",
+                    result: null,
+                });
+            }, timeout);
+        }
+        globalThis.getIsReday = getIsReday;
+        window.getIsReday = getIsReday;
     </script>
 </body>
 

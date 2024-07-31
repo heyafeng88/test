@@ -51,11 +51,10 @@
         globalThis.testEvaluateJS = testEvaluateJS;
         window.testEvaluateJS = testEvaluateJS;
         // 安卓时接受cocos数据
-        function cocosToWeb() {
+        function cocosToWeb(parm) {
             setTimeout(() => {
-                showLog('Native接收:-');
-                // showLog('Native接收:' + params);
-                // strToFun(params);
+                showLog('Native接收:' + parm);
+                // strToFun(parm);
             });
         }
         globalThis.cocosToWeb = cocosToWeb;

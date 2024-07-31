@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <div id="myHeading">测试5</div>
+    <div id="myHeading">测试6</div>
     <script>
         var h1Element = document.getElementById('myHeading');
         function showLog(str) {
@@ -42,8 +42,11 @@
                 strToFun(data);
             });
         });
+        window.testEvaluateJS = () => {
+            showLog('testEvaluateJS win************>');
+        }
         globalThis.testEvaluateJS = () => {
-            showLog('testEvaluateJS************>');
+            showLog('testEvaluateJS g************>');
         }
         // 安卓时接受cocos数据
         function cocosToWeb(params) {

@@ -9,14 +9,14 @@
 </head>
 
 <body>
-    <div id="myHeading">测试6</div>
+    <div id="myHeading">测试7</div>
     <script>
         var h1Element = document.getElementById('myHeading');
+
         function showLog(str) {
             h1Element.textContent += '\n  |||  ' + str;
         }
         let is_Native = !!(+new URLSearchParams(window.location.search)?.get('isNative'));
-
     </script>
     <script>
         // 接受相关
@@ -42,11 +42,15 @@
                 strToFun(data);
             });
         });
-        window.testEvaluateJS = () => {
-            showLog('testEvaluateJS win************>');
-        }
         globalThis.testEvaluateJS = () => {
             showLog('testEvaluateJS g************>');
+        }
+        globalThis.cocosToWeb = () => {
+            showLog('Native接收 g:' + params);
+            strToFun(params);
+        }
+        window.testEvaluateJS = () => {
+            showLog('testEvaluateJS win************>');
         }
         // 安卓时接受cocos数据
         function cocosToWeb(params) {
@@ -66,27 +70,40 @@
     </script>
     <script>
         // 初始化完成 通知cocos
-        sendToCocos({ fName: "webReady", result: null, });
+        sendToCocos({
+            fName: "webReady",
+            result: null,
+        });
+
         function getIsReday() {
-            sendToCocos({ fName: "webReady", result: null, });
+            sendToCocos({
+                fName: "webReady",
+                result: null,
+            });
         }
         // 执行cocos传过来的代码
         function evalJS(params) {
             showLog('=========evalJS=========');
             try {
                 new Function(params.jsStr)();
-                sendToCocos({ fName: params.fName, result: null });
+                sendToCocos({
+                    fName: params.fName,
+                    result: null
+                });
             } catch (error) {
                 showLog('evalJS_error---->' + error.toString());
             }
         }
         // 调钱包方法
-        function toNWalletFun(params) {
+        globalThis.toNWalletFun = () => {
             showLog('=========toNWalletFun=========');
             if (!NWallet) return;
             try {
                 NWallet[params.fun1](params)?.then((result) => {
-                    sendToCocos({ fName: params.fName, result });
+                    sendToCocos({
+                        fName: params.fName,
+                        result
+                    });
                 });
             } catch (error) {
                 showLog('toNWalletFun_error---->' + error.toString());

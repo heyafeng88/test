@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <div id="myHeading">测试1</div>
+    <div id="myHeading">测试2</div>
     <script>
         var h1Element = document.getElementById('myHeading');
         function showLog(str) {
@@ -29,6 +29,7 @@
         //web接收来自cocos的消息
         window.addEventListener('message', function (e) {
             let data = e.data;
+            showLog('Web接收:' + data);
             if (!data.startsWith("_ToWeb")) return;
             data = data.replace("_ToWeb", "");
             try {
@@ -43,6 +44,7 @@
         });
         // 安卓时接受cocos数据
         function cocosToWeb(params) {
+            showLog('Native接收:' + params);
             strToFun(params);
         }
         // web发送消息给cocos

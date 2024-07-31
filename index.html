@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <div id="myHeading">测试14</div>
+    <div id="myHeading">测试15</div>
     <script>
         var h1Element = document.getElementById('myHeading');
 
@@ -21,10 +21,10 @@
     <script>
         // 接受相关
         function strToFun(data) {
-            // if (!data) return;
-            // console.log("WebView接收:", data.fun);
-            // showLog('strToFun---->' + data.fun);
-            // window[data.fun] && window[data.fun](data.parm);
+            if (!data) return;
+            console.log("WebView接收:", data.fun);
+            showLog('strToFun---->' + data.fun);
+            window[data.fun] && window[data.fun](data.parm);
         }
         //web接收来自cocos的消息
         window.addEventListener('message', function (e) {

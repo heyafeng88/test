@@ -9,11 +9,11 @@
 </head>
 
 <body>
-    <div id="myHeading">测试0</div>
+    <div id="myHeading">测试1</div>
     <script>
         var h1Element = document.getElementById('myHeading');
         function showLog(str) {
-            h1Element.textContent += '<br>||' + str;
+            h1Element.textContent += '\n  |||  ' + str;
         }
         let is_Native = !!(+new URLSearchParams(window.location.search)?.get('isNative'));
 
@@ -59,6 +59,9 @@
     <script>
         // 初始化完成 通知cocos
         sendToCocos({ fName: "webReady", result: null, });
+        function getIsReday() {
+            sendToCocos({ fName: "webReady", result: null, });
+        }
         // 执行cocos传过来的代码
         function evalJS(params) {
             showLog('=========evalJS=========');

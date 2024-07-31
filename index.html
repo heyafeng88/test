@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <div id="myHeading">测试7</div>
+    <div id="myHeading">测试8</div>
     <script>
         var h1Element = document.getElementById('myHeading');
 
@@ -42,21 +42,16 @@
                 strToFun(data);
             });
         });
-        globalThis.testEvaluateJS = () => {
-            showLog('testEvaluateJS g************>');
+        function testEvaluateJS() {
+            showLog('testEvaluateJS ************>');
         }
-        globalThis.cocosToWeb = () => {
-            showLog('Native接收 g:' + params);
-            strToFun(params);
-        }
-        window.testEvaluateJS = () => {
-            showLog('testEvaluateJS win************>');
-        }
+        globalThis.testEvaluateJS = testEvaluateJS;
         // 安卓时接受cocos数据
         function cocosToWeb(params) {
             showLog('Native接收:' + params);
             strToFun(params);
         }
+        globalThis.cocosToWeb = cocosToWeb;
         // web发送消息给cocos
         function sendToCocos(data) {
             showLog('sendToCocos---->' + data.fName);
@@ -95,7 +90,7 @@
             }
         }
         // 调钱包方法
-        globalThis.toNWalletFun = () => {
+        function toNWalletFun(params) {
             showLog('=========toNWalletFun=========');
             if (!NWallet) return;
             try {
@@ -109,6 +104,7 @@
                 showLog('toNWalletFun_error---->' + error.toString());
             }
         }
+        globalThis.toNWalletFun = toNWalletFun;
     </script>
 </body>
 

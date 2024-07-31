@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <div id="myHeading">测试9</div>
+    <div id="myHeading">测试10</div>
     <script>
         var h1Element = document.getElementById('myHeading');
 
@@ -42,15 +42,20 @@
                 strToFun(data);
             });
         });
+        
         function testEvaluateJS() {
-            showLog('testEvaluateJS ************>');
+            setTimeout(() => {
+                showLog('testEvaluateJS ************>');
+            });
         }
         globalThis.testEvaluateJS = testEvaluateJS;
         window.testEvaluateJS = testEvaluateJS;
         // 安卓时接受cocos数据
         function cocosToWeb(params) {
-            showLog('Native接收:' + params);
-            strToFun(params);
+            setTimeout(() => {
+                showLog('Native接收:' + params);
+                strToFun(params);
+            });
         }
         globalThis.cocosToWeb = cocosToWeb;
         window.cocosToWeb = cocosToWeb;
@@ -93,18 +98,20 @@
         }
         // 调钱包方法
         function toNWalletFun(params) {
-            showLog('=========toNWalletFun=========');
-            if (!NWallet) return;
-            try {
-                NWallet[params.fun1](params)?.then((result) => {
-                    sendToCocos({
-                        fName: params.fName,
-                        result
+            setTimeout(() => {
+                showLog('=========toNWalletFun=========');
+                if (!NWallet) return;
+                try {
+                    NWallet[params.fun1](params)?.then((result) => {
+                        sendToCocos({
+                            fName: params.fName,
+                            result
+                        });
                     });
-                });
-            } catch (error) {
-                showLog('toNWalletFun_error---->' + error.toString());
-            }
+                } catch (error) {
+                    showLog('toNWalletFun_error---->' + error.toString());
+                }
+            });
         }
         globalThis.toNWalletFun = toNWalletFun;
         window.toNWalletFun = toNWalletFun;

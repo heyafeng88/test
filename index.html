@@ -12,8 +12,8 @@
     <div id="myHeading"></div>
     <script>
         var h1Element = document.getElementById('myHeading');
-        h1Element.textContent = "测试16";
-        
+        // h1Element.textContent = "测试17";
+
         function showLog(str) {
             // h1Element.textContent += '\n  |||  ' + str;
         }
@@ -62,13 +62,15 @@
         window.cocosToWeb = cocosToWeb;
         // web发送消息给cocos
         function sendToCocos(data) {
-            showLog('sendToCocos---->' + data.fName);
-            if (is_Native || is_Native === undefined) { //android or ios
-                document.location = 'testkey://' + encodeURIComponent(JSON.stringify(data));
-            }
-            if (!is_Native) { //browser 浏览器下，向cocos发送消息
-                parent.postMessage("_ToCocos" + JSON.stringify(data), "*");
-            }
+            setTimeout(() => {
+                showLog('sendToCocos---->' + data.fName);
+                if (is_Native || is_Native === undefined) { //android or ios
+                    document.location = 'testkey://' + encodeURIComponent(JSON.stringify(data));
+                }
+                if (!is_Native) { //browser 浏览器下，向cocos发送消息
+                    parent.postMessage("_ToCocos" + JSON.stringify(data), "*");
+                }
+            });
         }
     </script>
     <script>

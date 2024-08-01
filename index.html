@@ -9,13 +9,14 @@
 </head>
 
 <body>
-    <div id="myHeading">测试15</div>
+    <div id="myHeading"></div>
     <script>
         var h1Element = document.getElementById('myHeading');
 
         function showLog(str) {
-            h1Element.textContent += '\n  |||  ' + str;
+            // h1Element.textContent += '\n  |||  ' + str;
         }
+        showLog("测试15");
         let is_Native = !!(+new URLSearchParams(window.location.search)?.get('isNative'));
     </script>
     <script>
@@ -42,14 +43,14 @@
                 strToFun(data);
             });
         });
-        
-        function testEvaluateJS() {
-            setTimeout(() => {
-                showLog('testEvaluateJS ************>');
-            });
-        }
-        globalThis.testEvaluateJS = testEvaluateJS;
-        window.testEvaluateJS = testEvaluateJS;
+
+        // function testEvaluateJS() {
+        //     setTimeout(() => {
+        //         showLog('testEvaluateJS ************>');
+        //     });
+        // }
+        // globalThis.testEvaluateJS = testEvaluateJS;
+        // window.testEvaluateJS = testEvaluateJS;
         // 安卓时接受cocos数据
         function cocosToWeb(parm) {
             setTimeout(() => {

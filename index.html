@@ -12,11 +12,11 @@
     <div id="myHeading"></div>
     <script>
         var h1Element = document.getElementById('myHeading');
-
+        h1Element.textContent = "测试16";
+        
         function showLog(str) {
             // h1Element.textContent += '\n  |||  ' + str;
         }
-        showLog("测试15");
         let is_Native = !!(+new URLSearchParams(window.location.search)?.get('isNative'));
     </script>
     <script>
